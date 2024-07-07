@@ -40,6 +40,9 @@ public class HttpService {
 
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
+        } catch (IOException e) {
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
         return null;
     }

@@ -1,7 +1,6 @@
 package uz.pdp.g42.common.service;
 
 import uz.pdp.g42.common.enom.FilePath;
-import uz.pdp.g42.common.model.User;
 import uz.pdp.g42.common.model.Wikipidiya;
 import uz.pdp.g42.common.model.WikipidiyaHistory;
 
@@ -25,15 +24,25 @@ public class WikipidiyaService implements BaseService<Wikipidiya>{
 
     }
 
+<<<<<<< HEAD
     @Override
     public Wikipidiya get(Long id) throws IOException {
         List<Wikipidiya> list = fileService.getList(FilePath.WIKIPIDIYA.getPath(), Wikipidiya.class);
+=======
+    public Wikipidiya get(Long id) throws IOException {
+        List<Wikipidiya> list = fileService.getList(FilePath.WIKIPIDIYA.getPath(), Wikipidiya.class);
+
+>>>>>>> 2e4b13e661dc804cc08eeb978faefc6311f232ac
         Wikipidiya wikipidiya = list.stream().filter(wikipidiya1 -> wikipidiya1.getChatId().equals(id)).findFirst().orElse(null);
         return wikipidiya;
     }
 
+<<<<<<< HEAD
     @Override
         public List<Wikipidiya> getById(Long id) throws IOException {
+=======
+    public List<Wikipidiya> getById(Long id) throws IOException {
+>>>>>>> 2e4b13e661dc804cc08eeb978faefc6311f232ac
         List<Wikipidiya> list = fileService.getList(FilePath.WIKIPIDIYA.getPath(), Wikipidiya.class);
         return list.stream().filter(wikipidiya -> wikipidiya.getChatId().equals(id)).toList();
     }

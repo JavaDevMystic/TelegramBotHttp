@@ -173,11 +173,11 @@ public class BotMain extends TelegramLongPollingBot {
                 This bot is for you.
                 1️⃣. To search for information
                 2️⃣. To search for video
-                3️⃣. Image search
+                3️⃣. pull question
                 Will help.
                 """;
 
-        List<String> list = List.of("video", "search Wikipedia", "search picture", "history");
+        List<String> list = List.of("video", "search Wikipedia", "history");
         try {
             executeJobReply(Long.parseLong(CHAT_ID), text, keyboardMarkapService.replyKeyboard(list, 2));
         } catch (IOException | InterruptedException e) {
@@ -186,7 +186,7 @@ public class BotMain extends TelegramLongPollingBot {
     }
 
     private void sendInlineKeyboard() {
-        List<String> list = List.of("video🎥🎥🎥", "search Wikipedia📖📖📖", "search picture 🎴🎴🎴");
+        List<String> list = List.of("video🎥🎥🎥", "search Wikipedia📖📖📖", "pull question");
         try {
             InlineKeyboardMarkup inlineKeyboard = keyboardMarkapService.buildInlineKeyboardMarkup(list, 2);
             executeJobInline(Long.parseLong(CHAT_ID), "Choose one from the menu", inlineKeyboard);

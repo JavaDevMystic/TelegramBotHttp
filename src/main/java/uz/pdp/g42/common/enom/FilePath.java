@@ -9,8 +9,6 @@ import lombok.NoArgsConstructor;
 public enum FilePath {
     USER(" "),
     WIKIPIDIYA(" "),
-    VIDIO(""),
-    PICTURE("");
-
+    VIDIO("");
     private String path;
 }

@@ -12,7 +12,7 @@ import java.util.List;
 public class KeyboardMarkapService {
 
 
-    public static ReplyKeyboardMarkup replyKeyboard(List<String> menus, int col) {
+    public  ReplyKeyboardMarkup replyKeyboard(List<String> menus, int col) {
         ReplyKeyboardMarkup replyKeyboard = new ReplyKeyboardMarkup();
         List<KeyboardRow> rows = new ArrayList<>();
         replyKeyboard.setResizeKeyboard(true);
@@ -44,22 +44,23 @@ public class KeyboardMarkapService {
         for (int i = 0; i < list.size(); i++) {
             InlineKeyboardButton inlineKeyboardButton = new InlineKeyboardButton();
             inlineKeyboardButton.setText(list.get(i));
-            inlineKeyboardButton.setCallbackData(list.get(i)); // Callback ma'lumotini o'rnatish
+            inlineKeyboardButton.setCallbackData(list.get(i).toString());
 
             row.add(inlineKeyboardButton);
 
             if ((i + 1) % col == 0) {
-                rows.add(new ArrayList<>(row)); // Yangi satrni qo'shish
-                row.clear(); // Satrni tozalash
+                rows.add(new ArrayList<>(row));
+                row.clear();
             }
         }
 
         if (!row.isEmpty()) {
-            rows.add(new ArrayList<>(row)); // Qolgan tugmalarni qo'shish
+            rows.add(new ArrayList<>(row));
         }
 
         return inlineKeyboardMarkup;
     }
+
 
 
 }

@@ -1,5 +1,7 @@
 package uz.pdp.g42.bot.service;
 
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import lombok.SneakyThrows;
 import org.glassfish.grizzly.http.util.UEncoder;
 import uz.pdp.g42.common.model.User;
 
@@ -21,6 +23,7 @@ public class HttpService {
         this.httpClient = httpClient;
     }
 
+    @SneakyThrows
     public String searchHttpReuest(String  searchTerm){
         try {
             String encodedSearchTerm = URLEncoder.encode(searchTerm, StandardCharsets.UTF_8);
@@ -33,11 +36,9 @@ public class HttpService {
 
             HttpResponse<String> response = httpClient.send(request,HttpResponse.BodyHandlers.ofString());
 
+//            JSONPObject jsonpObject
+
         } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
         return null;

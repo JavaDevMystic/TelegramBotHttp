@@ -49,3 +49,5 @@ u
 Esrc/main/java/uz/pdp/g42/common/service/WikipidiyaHistoryService.java,9\0\906fc29bac8535e4f1a58efcbebae43386062ced
 e
 5src/main/java/uz/pdp/g42/bot/service/HttpService.java,e\b\eb0ac693a1b5a23b1ed0da43bb0092371c434a43
+c
+3src/main/java/uz/pdp/g42/bot/database/Database.java,c\9\c9a6ab50479d58171697e0eb8e37a838a90ff88a

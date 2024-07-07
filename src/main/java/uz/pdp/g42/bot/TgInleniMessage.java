@@ -10,6 +10,6 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMa
 @Setter
 public class TgInleniMessage {
     private String chat_id;
-    private String txt;
-    private InlineKeyboardMarkup in_keyboardMarkap;
+    private String text;
+    private InlineKeyboardMarkup reply_markup;
 }

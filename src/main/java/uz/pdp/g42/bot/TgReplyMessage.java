@@ -1,14 +1,21 @@
 package uz.pdp.g42.bot;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
-@AllArgsConstructor
+
+@RequiredArgsConstructor
 @Setter
 @Getter
 public class TgReplyMessage {
-    private String chat_id;
-    private SendPhoto sendPhoto;
+    private final String chat_id;
+    private final String photo;
+    private final String caption;
+
+    public TgReplyMessage(String chat_id, SendPhoto sendPhoto) {
+        this.chat_id = chat_id;
+        this.photo = sendPhoto.getPhoto().getAttachName();
+        this.caption = sendPhoto.getCaption();
+    }
 }

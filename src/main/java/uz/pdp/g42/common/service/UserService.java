@@ -10,11 +10,11 @@ import java.util.UUID;
 
 public class UserService implements BaseService<User> {
 //    private final User user;
-      private final FileService fileService;
+      private  FileService fileService;
 
-    public UserService(FileService fileService) {
-        this.fileService = fileService;
-    }
+//    public UserService(FileService fileService) {
+//        this.fileService = fileService;
+//    }
 
     public void add(User user) throws IOException {
         fileService.writeFile(user,FilePath.USER,User.class);
@@ -26,12 +26,9 @@ public class UserService implements BaseService<User> {
 
     public User get(Long id) throws IOException {
         List<User> list = fileService.getList(FilePath.USER.getPath(), User.class);
-        for (User user : list) {
-            if (user.equals(id)) {
-                return Optional.of(user).get();
-            }
-        }
-        return Optional.<User>empty().get();
+
+        User user1 = list.stream().filter(user -> user.getId().equals(id)).findFirst().orElse(null);
+        return user1;
     }
 
     public List<User> getById(Long id) throws IOException {

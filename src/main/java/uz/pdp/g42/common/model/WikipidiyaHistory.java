@@ -5,13 +5,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.HashMap;
 import java.util.List;
+
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter
 @Getter
-public class Wikipidiya {
-    private HashMap<Long,String> hashMap;
+@Setter
+public class WikipidiyaHistory {
+    private Long chatId;
+    private List<String> list;
 }

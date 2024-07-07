@@ -41,3 +41,5 @@ o
 ?src/main/java/uz/pdp/g42/bot/service/SendFileHistorService.java,c\4\c4fee843a714f55d25bf49261f031da5ee7d8a8e
 l
 <src/main/java/uz/pdp/g42/common/model/WikipidiyaHistory.java,9\d\9d29e1f0e50e3bcacd29b92d99d9ca92b39e5049
+`
+0src/main/java/uz/pdp/g42/bot/service/Status.java,8\4\842f3a870a4338b432bd50cf4846a87258c7d010

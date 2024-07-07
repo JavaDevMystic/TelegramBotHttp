@@ -6,6 +6,6 @@ import java.util.UUID;
 
 public interface BaseService<T> {
     List<T> list() throws IOException;
-    T get(UUID id) throws IOException;
-    List<T> getById(UUID id) throws IOException;
+    T get(Long id) throws IOException;
+    List<T> getById(Long id) throws IOException;
 }

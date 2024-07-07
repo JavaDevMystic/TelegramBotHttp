@@ -1,6 +1,7 @@
 package uz.pdp.g42.bot.service;
 
-public class Status {
+public interface Status {
+    String[][] TELEPHONE={{"\uD83D\uDCF2Send my phone number"}};
     String SEARCH_WIKIPEDIA="SEARCH WIKIPEDIA";
     String SEARCH_VIDEO="SEARCH VIDEO";
     String SEARCH_IMAGE="SEARCH IMAGE";

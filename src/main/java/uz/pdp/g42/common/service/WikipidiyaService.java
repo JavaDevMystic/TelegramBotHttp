@@ -25,16 +25,28 @@ public class WikipidiyaService implements BaseService<Wikipidiya>{
     }
 
     @Override
+<<<<<<< HEAD
     public Wikipidiya get(Long id) throws IOException {
         List<Wikipidiya> list = fileService.getList(FilePath.WIKIPIDIYA.getPath(), Wikipidiya.class);
+=======
+    public WikipidiyaHistory get(Long id) throws IOException {
+        List<WikipidiyaHistory> list = fileService.getList(FilePath.WIKIPIDIYA.getPath(), WikipidiyaHistory.class);
+        WikipidiyaHistory wikipidiya1 = list.stream().filter(wikipidiya -> wikipidiya.getChatId().equals(id)).findFirst().orElse(null);
+>>>>>>> 69cbd69fbc797d3b66ecca1f5c0903355a31abf5
 
         Wikipidiya wikipidiya = list.stream().filter(wikipidiya1 -> wikipidiya1.getChatId().equals(id)).findFirst().orElse(null);
         return wikipidiya;
     }
 
     @Override
+<<<<<<< HEAD
     public List<Wikipidiya> getById(Long id) throws IOException {
         List<Wikipidiya> list = fileService.getList(FilePath.WIKIPIDIYA.getPath(), Wikipidiya.class);
+=======
+    public List<WikipidiyaHistory> getById(Long id) throws IOException {
+        List<WikipidiyaHistory> list = fileService.getList(FilePath.WIKIPIDIYA.getPath(), WikipidiyaHistory.class);
+
+>>>>>>> 69cbd69fbc797d3b66ecca1f5c0903355a31abf5
         return list.stream().filter(wikipidiya -> wikipidiya.getChatId().equals(id)).toList();
 
     }

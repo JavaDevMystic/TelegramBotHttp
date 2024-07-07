@@ -1,13 +1,25 @@
+<<<<<<< HEAD
+=======
+package uz.pdp.g42.bot;
+
+<<<<<<< HEAD
+>>>>>>> 69cbd69fbc797d3b66ecca1f5c0903355a31abf5
 package uz.pdp.g42.bot;
 
 import com.google.gson.Gson;
+import lombok.SneakyThrows;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.objects.InputFile;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
+import uz.pdp.g42.bot.database.Database;
 import uz.pdp.g42.bot.service.KeyboardMarkapService;
+import uz.pdp.g42.bot.service.Status;
 import uz.pdp.g42.common.model.User;
+import uz.pdp.g42.common.service.UserService;
 
 import java.io.IOException;
 import java.net.URI;
@@ -22,12 +34,16 @@ public class BotMain extends TelegramLongPollingBot {
     private static final String USERNAME = "pdphandler_bot";
     private static final String BASE_URL = "https://api.telegram.org/bot" + BOT_TOKEN + "/sendMessage";
     private static final String CHAT_ID = "5682972913";
-    private static KeyboardMarkapService keyboardMarkapService = new KeyboardMarkapService();
+    private static final UserService userService=new UserService();
+    private static final Database database=Database.getInstance();
+    private static final KeyboardMarkapService keyboardMarkapService = new KeyboardMarkapService();
 
+    @SneakyThrows
     @Override
     public void onUpdateReceived(Update update) {
         if (update.hasMessage() && update.getMessage().hasText()) {
             Long id=update.getMessage().getChatId();
+<<<<<<< HEAD
 //            User currentUser=getUserById(id);
         }
 
@@ -43,25 +59,54 @@ public class BotMain extends TelegramLongPollingBot {
             sendInlineKeyboard(chatId);
         } else {
             sendDefaultMessage(chatId);
+=======
+            User currentUser= getUserById(id);
+            currentUser.setState("null");
+            String fromBotMessage=update.getMessage().getText();
+
+            if (fromBotMessage.equals("/start")) {
+                currentUser.setState("Entered phone number");
+                String text = "Welcome to Bot";
+                SendPhoto sendPhoto = new SendPhoto();
+                sendPhoto.setChatId(id);
+                sendPhoto.setPhoto(new InputFile("https://miro.medium.com/v2/resize:fit:1400/1*lmbFqu5aGrPLdiRIHbe6gQ.jpeg"));
+                sendPhoto.setCaption(text);
+                SendMessage sendMessage=new SendMessage();
+                sendMessage.setChatId(id);
+                ReplyKeyboardMarkup replyKeyboardMarkup=keyboardMarkapService.replyKeyboardMarkup(Status.TELEPHONE);
+                sendMessage.setReplyMarkup(replyKeyboardMarkup);
+                execute(sendMessage);
+            }
+        } else if (update.hasMessage() && update.getMessage().hasContact()) {
+            Long id=update.getMessage().getChatId();
+            User currentUser=getUserById(id);
+            if (currentUser.getState().equals("Entered phone number")) {
+                currentUser.setState("Registered");
+                SendMessage sendMessage=new SendMessage();
+                sendMessage.setChatId(id);
+                sendMessage.setText("You have successfully registered");
+                execute(sendMessage);
+                sendMessage.setChatId(id);
+                sendMessage.setText("You can use this Bot");
+                ReplyKeyboardMarkup replyKeyboardMarkup=keyboardMarkapService.replyKeyboardMarkup(Status.ALL_ONE);
+                sendMessage.setReplyMarkup(replyKeyboardMarkup);
+                execute(sendMessage);
+            }
+>>>>>>> 69cbd69fbc797d3b66ecca1f5c0903355a31abf5
         }
     }
 
-    private void sendWelcomeMessage(Long chatId) {
-        String text = "Welcome to Bot";
-        List<String> list = List.of("video🎥🎥🎥", "wikipedia izlash📖📖📖", "pull question", "history");
-
-        SendPhoto sendPhoto = new SendPhoto();
-        sendPhoto.setChatId(chatId.toString());
-        sendPhoto.setPhoto(new InputFile("https://miro.medium.com/v2/resize:fit:1400/1*lmbFqu5aGrPLdiRIHbe6gQ.jpeg"));
-        sendPhoto.setCaption(text);
-//        sendPhoto.setReplyMarkup(keyboardMarkapService.replyKeyboard());
-
-
-        try {
-            executeJobReply(chatId, sendPhoto);
-        } catch (IOException | InterruptedException e) {
-            throw new RuntimeException(e);
+    private User getUserById(Long id) {
+        for (User user : database.users) {
+            if (user.getId().equals(id)) {
+                return user;
+            }
         }
+        User currentUser=new User();
+        currentUser.setId(id);
+        database.users.add(currentUser);
+        return currentUser;
+
     }
 
     private void sendInlineKeyboard(Long chatId) {
@@ -129,6 +174,10 @@ public class BotMain extends TelegramLongPollingBot {
 
         System.out.println("Response: " + response.body());
     }
+<<<<<<< HEAD
 
     // TgReplyMessage and TgInlineMessage classes should be implemented accordingly
 }
+=======
+}
+>>>>>>> 69cbd69fbc797d3b66ecca1f5c0903355a31abf5

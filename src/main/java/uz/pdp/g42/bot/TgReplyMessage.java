@@ -7,11 +7,9 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMar
 @AllArgsConstructor
 @Setter
 @Getter
-public class TGMessage {
+public class TgReplyMessage {
     private String chat_id;
     private String text;
     private ReplyKeyboardMarkup reply_markup;
-
-
 
 }

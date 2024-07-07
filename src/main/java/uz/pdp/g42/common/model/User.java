@@ -1,17 +1,15 @@
 package uz.pdp.g42.common.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @AllArgsConstructor
 @Getter
 @Setter
 @ToString
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class User {
-    private String userName;
+    @EqualsAndHashCode.Include
+    private Long id;
     private String Name;
-    private long chatId;
     private String phoneNumber;
 }

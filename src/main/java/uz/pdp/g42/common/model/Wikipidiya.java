@@ -13,5 +13,6 @@ import java.util.List;
 @Setter
 @Getter
 public class Wikipidiya {
+    private Long chatId;
     private HashMap<Long,String> hashMap;
 }

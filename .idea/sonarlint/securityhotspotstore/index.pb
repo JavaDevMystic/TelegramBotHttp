@@ -43,3 +43,9 @@ l
 <src/main/java/uz/pdp/g42/common/model/WikipidiyaHistory.java,9\d\9d29e1f0e50e3bcacd29b92d99d9ca92b39e5049
 `
 0src/main/java/uz/pdp/g42/bot/service/Status.java,8\4\842f3a870a4338b432bd50cf4846a87258c7d010
+d
+4src/main/java/uz/pdp/g42/json/wikipidiyahistory.json,2\a\2a07ce811446ed85adbbf6966c36fe82e10aee3c
+u
+Esrc/main/java/uz/pdp/g42/common/service/WikipidiyaHistoryService.java,9\0\906fc29bac8535e4f1a58efcbebae43386062ced
+e
+5src/main/java/uz/pdp/g42/bot/service/HttpService.java,e\b\eb0ac693a1b5a23b1ed0da43bb0092371c434a43

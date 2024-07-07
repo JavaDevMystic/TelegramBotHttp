@@ -3,6 +3,7 @@ package uz.pdp.g42.common.model;
 import lombok.*;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 @ToString

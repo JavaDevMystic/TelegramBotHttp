@@ -233,12 +233,12 @@ public class BotMain extends TelegramLongPollingBot {
 
     @Override
     public String getBotUsername() {
-        return "YOUR_BOT_USERNAME"; // o'zingizning bot username ni kiriting
+        return USERNAME; // o'zingizning bot username ni kiriting
     }
 
     @Override
     public String getBotToken() {
-        return "YOUR_BOT_TOKEN"; // o'zingizning bot token ni kiriting
+        return BOT_TOKEN; // o'zingizning bot token ni kiriting
     }
 
     private void executeJobReply(Long chatId, SendPhoto sendPhoto) throws IOException, InterruptedException {

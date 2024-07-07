@@ -16,6 +16,8 @@ public class KeyboardMarkapService {
         ReplyKeyboardMarkup replyKeyboard = new ReplyKeyboardMarkup();
         List<KeyboardRow> rows = new ArrayList<>();
         replyKeyboard.setResizeKeyboard(true);
+        replyKeyboard.setSelective(true);
+        replyKeyboard.setOneTimeKeyboard(true);
         replyKeyboard.setKeyboard(rows);
 
         KeyboardRow row = new KeyboardRow();

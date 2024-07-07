@@ -24,8 +24,7 @@ public class UserService implements BaseService<User> {
         return fileService.getList(FilePath.USER.getPath(),User.class);
     }
 
-    @Override
-    public User get(UUID id) throws IOException {
+    public User get(Long id) throws IOException {
         List<User> list = fileService.getList(FilePath.USER.getPath(), User.class);
         for (User user : list) {
             if (user.equals(id)) {
@@ -35,8 +34,7 @@ public class UserService implements BaseService<User> {
         return Optional.<User>empty().get();
     }
 
-    @Override
-    public List<User> getById(UUID id) throws IOException {
+    public List<User> getById(Long id) throws IOException {
         List<User> list = fileService.getList(FilePath.USER.getPath(), User.class);
         return list.stream().filter(user -> user.getId().equals(id)).toList();
     }

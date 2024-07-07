@@ -1,24 +1,19 @@
 package uz.pdp.g42.bot;
 
 import com.google.gson.Gson;
-import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
-import org.telegram.telegrambots.meta.api.objects.Contact;
 import org.telegram.telegrambots.meta.api.objects.InputFile;
-import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import uz.pdp.g42.bot.service.KeyboardMarkapService;
+import uz.pdp.g42.common.model.User;
 
 import java.io.IOException;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.ArrayList;
 import java.util.List;
 
 public class BotMain extends TelegramLongPollingBot {
@@ -27,82 +22,63 @@ public class BotMain extends TelegramLongPollingBot {
     private static final String USERNAME = "pdphandler_bot";
     private static final String BASE_URL = "https://api.telegram.org/bot" + BOT_TOKEN + "/sendMessage";
     private static final String CHAT_ID = "5682972913";
-
-    private static final KeyboardMarkapService keyboardMarkapService = new KeyboardMarkapService();
+    private static KeyboardMarkapService keyboardMarkapService = new KeyboardMarkapService();
 
     @Override
     public void onUpdateReceived(Update update) {
-
-
         if (update.hasMessage() && update.getMessage().hasText()) {
-            Message message = update.getMessage();
-            Long chatId = message.getChatId();
-            String txt = message.getText();
+            Long id=update.getMessage().getChatId();
+            User currentUser=getUserById(id);
+        }
 
-            switch (txt) {
-                case "/start":
-                    sendWelcomeMessage(chatId);
 
-                    break;
-                case "history":
-                    try {
-                        sendInlineKeyboard(chatId);
-                    } catch (URISyntaxException e) {
-                        throw new RuntimeException(e);
-                    } catch (TelegramApiException e) {
-                        throw new RuntimeException(e);
-                    }
-                    break;
-                default:
-                    sendDefaultMessage(chatId);
-                    break;
-            }
-        } else if (update.hasCallbackQuery()) {
-            // Callback queriesni qayta ishlash
+
+
+        Long chatId = update.getMessage().getChatId();
+        String messageText = update.getMessage().getText();
+
+        if (messageText.equals("/start")) {
+            sendWelcomeMessage(chatId);
+        } else if (messageText.equals("inline")) {
+            sendInlineKeyboard(chatId);
+        } else {
+            sendDefaultMessage(chatId);
         }
     }
 
     private void sendWelcomeMessage(Long chatId) {
-                List<String> list = List.of("video", "Wikipedia izlash", "surat izlash", "history");
+        String text = "Welcome to Bot";
+        List<String> list = List.of("video🎥🎥🎥", "wikipedia izlash📖📖📖", "pull question", "history");
 
-//        String text = """
-//                Telegram botimizga xush kelibsiz.
-//
-//                Ushbu bot sizga quyidagilarni taklif qiladi:
-//                1️⃣. Ma'lumot izlash
-//                2️⃣. Video izlash
-//                3️⃣. Surat izlash
-//                """;
-//
+        SendPhoto sendPhoto = new SendPhoto();
+        sendPhoto.setChatId(chatId.toString());
+        sendPhoto.setPhoto(new InputFile("https://miro.medium.com/v2/resize:fit:1400/1*lmbFqu5aGrPLdiRIHbe6gQ.jpeg"));
+        sendPhoto.setCaption(text);
+//        sendPhoto.setReplyMarkup(keyboardMarkapService.replyKeyboard());
 
-//        try {
-//            executeJobReply(chatId, text, keyboardMarkapService.replyKeyboard(list, 2));
-//        } catch (IOException | InterruptedException e) {
-//            throw new RuntimeException(e);
-//        }
+
+        try {
+            executeJobReply(chatId, sendPhoto);
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    private void sendInlineKeyboard(Long chatId) throws URISyntaxException, TelegramApiException {
-        String text = "Welcome to Bot";
+    private void sendInlineKeyboard(Long chatId) {
         List<String> list = List.of("video🎥🎥🎥", "wikipedia izlash📖📖📖", "pull question");
-        SendPhoto sendPhoto = new SendPhoto();
-        sendPhoto.setChatId(chatId);
-        sendPhoto.setPhoto(new InputFile(new URI("https://miro.medium.com/v2/resize:fit:1400/1*lmbFqu5aGrPLdiRIHbe6gQ.jpeg").toString()));
-        sendPhoto.setCaption(text);
-        sendPhoto.setReplyMarkup(keyboardMarkapService.buildInlineKeyboardMarkup(list,2));
-        execute(sendPhoto);
-//        try {
-//            InlineKeyboardMarkup inlineKeyboard = keyboardMarkapService.buildInlineKeyboardMarkup(list, 2);
-//            executeJobInline(chatId, "Menudan birini tanlang", inlineKeyboard);
-//        } catch (IOException | InterruptedException e) {
-//            throw new RuntimeException(e);
-//        }
+
+        try {
+            InlineKeyboardMarkup inlineKeyboard = keyboardMarkapService.buildInlineKeyboardMarkup(list, 2);
+            executeJobInline(chatId, "Menudan birini tanlang", inlineKeyboard);
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void sendDefaultMessage(Long chatId) {
         String text = "Sizning xabaringizni tushunmadim. Iltimos, boshqa buyruq kiriting.";
         try {
-            executeJobReply(chatId, text, null);
+            executeJobInline(chatId, text, null);
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -110,17 +86,17 @@ public class BotMain extends TelegramLongPollingBot {
 
     @Override
     public String getBotUsername() {
-        return USERNAME;
+        return USERNAME; // o'zingizning bot username ni kiriting
     }
 
     @Override
     public String getBotToken() {
-        return BOT_TOKEN;
+        return BOT_TOKEN; // o'zingizning bot token ni kiriting
     }
 
-    private void executeJobReply(Long chatId, String text, ReplyKeyboardMarkup replyKeyboard) throws IOException, InterruptedException {
+    private void executeJobReply(Long chatId, SendPhoto sendPhoto) throws IOException, InterruptedException {
         Gson gson = new Gson();
-        TgReplyMessage message = new TgReplyMessage(chatId.toString(), text, replyKeyboard);
+        TgReplyMessage message = new TgReplyMessage(chatId.toString(), sendPhoto);
 
         String json = gson.toJson(message);
 
@@ -153,4 +129,6 @@ public class BotMain extends TelegramLongPollingBot {
 
         System.out.println("Response: " + response.body());
     }
+
+    // TgReplyMessage and TgInlineMessage classes should be implemented accordingly
 }

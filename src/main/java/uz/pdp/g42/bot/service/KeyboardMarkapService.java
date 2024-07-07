@@ -12,28 +12,22 @@ import java.util.List;
 public class KeyboardMarkapService {
 
 
-    public  ReplyKeyboardMarkup replyKeyboard(List<String> menus, int col) {
-        ReplyKeyboardMarkup replyKeyboard = new ReplyKeyboardMarkup();
-        List<KeyboardRow> rows = new ArrayList<>();
-        replyKeyboard.setResizeKeyboard(true);
-        replyKeyboard.setSelective(true);
-        replyKeyboard.setOneTimeKeyboard(true);
-        replyKeyboard.setKeyboard(rows);
-
-        KeyboardRow row = new KeyboardRow();
-        for (int i = 1; i <= menus.size(); i++) {
-            row.add(new KeyboardButton(menus.get(i - 1)));
-            if (i % col == 0) {
-                rows.add(row);
-                row = new KeyboardRow();
+    public  ReplyKeyboardMarkup replyKeyboard(String[][] buttons) {
+        ReplyKeyboardMarkup replyKeyboardMarkup=new ReplyKeyboardMarkup();
+        replyKeyboardMarkup.setResizeKeyboard(true);
+        replyKeyboardMarkup.setOneTimeKeyboard(true);
+        replyKeyboardMarkup.setSelective(true);
+        List<KeyboardRow> keyboardRows=new ArrayList<>();
+        for (String[] button : buttons) {
+            KeyboardRow keyboardRow=new KeyboardRow();
+            for (String s : button) {
+                KeyboardButton keyboardButton=new KeyboardButton(s);
+                keyboardRow.add(keyboardButton);
             }
+            keyboardRows.add(keyboardRow);
         }
-
-        if (!row.isEmpty()) {
-            rows.add(row);
-        }
-
-        return replyKeyboard;
+        replyKeyboardMarkup.setKeyboard(keyboardRows);
+        return replyKeyboardMarkup;
     }
 
     public InlineKeyboardMarkup buildInlineKeyboardMarkup(List<String> list, int col) {

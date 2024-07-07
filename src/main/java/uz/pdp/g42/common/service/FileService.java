@@ -1,9 +1,14 @@
 package uz.pdp.g42.common.service;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import uz.pdp.g42.common.enom.FilePath;
 
-import java.io.*;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,36 +16,21 @@ public class FileService<T> {
 
     private static final Gson gson = new Gson();
 
-    public void writeFile(T t, FilePath filePath, Class<T[]> clazz) throws IOException {
-        List<T> list = getList(filePath.getPath(), clazz);
+    public List<T> getList(String filePath) throws IOException {
+        String json = new String(Files.readAllBytes(Paths.get(filePath)));
+        Type listType = new TypeToken<List<T>>(){}.getType();
+        return gson.fromJson(json, listType);
+    }
+
+    public void writeFile(T t, FilePath filePath) throws IOException {
+        List<T> list = getList(filePath.getPath());
         list.add(t);
         try (FileWriter fileWriter = new FileWriter(filePath.getPath())) {
             fileWriter.write(gson.toJson(list));
         }
     }
 
-    public List<T> readFile(FilePath filePath, Class<T[]> clazz) throws IOException {
-        return getList(filePath.getPath(), clazz);
-    }
-
-    public List<T> getList(String filePath, Class<T[]> clazz) throws IOException {
-        File file = new File(filePath);
-        if (!file.exists()) {
-            return new ArrayList<>();
-        }
-
-        try (FileInputStream fis = new FileInputStream(filePath)) {
-            byte[] bytes = fis.readAllBytes();
-            String json = new String(bytes);
-            if (json.isEmpty()) {
-                return new ArrayList<>();
-            }
-            T[] ts = gson.fromJson(json, clazz);
-            List<T> list = new ArrayList<>();
-            for (T t : ts) {
-                list.add(t);
-            }
-            return list;
-        }
+    public List<T> readFile(FilePath filePath) throws IOException {
+        return getList(filePath.getPath());
     }
 }

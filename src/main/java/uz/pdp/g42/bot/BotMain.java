@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 package uz.pdp.g42.bot;
 
 import com.google.gson.Gson;
@@ -18,6 +16,7 @@ import uz.pdp.g42.bot.service.KeyboardMarkapService;
 import uz.pdp.g42.bot.service.SendFileHistorService;
 import uz.pdp.g42.bot.service.Status;
 import uz.pdp.g42.common.model.User;
+import uz.pdp.g42.common.service.FileService;
 import uz.pdp.g42.common.service.UserService;
 
 import java.io.IOException;
@@ -33,7 +32,8 @@ public class BotMain extends TelegramLongPollingBot {
     private static final String USERNAME = "pdphandler_bot";
     private static final String BASE_URL = "https://api.telegram.org/bot" + BOT_TOKEN + "/sendMessage";
     private static final String CHAT_ID = "5682972913";
-    private static final UserService userService = new UserService();
+    private static FileService fileService = new FileService();
+    private static final UserService userService = new UserService(fileService);
     private static final Database database = Database.getInstance();
     private static final KeyboardMarkapService keyboardMarkapService = new KeyboardMarkapService();
     private static final SendFileHistorService sendFileHistorService = new SendFileHistorService();
@@ -73,6 +73,7 @@ public class BotMain extends TelegramLongPollingBot {
             User currentUser = getUserById(id);
             if (currentUser.getState().equals("Entered phone number")) {
                 currentUser.setState("Registered");
+
                 SendMessage sendMessage = new SendMessage();
                 sendMessage.setChatId(id);
                 sendMessage.setText("You have successfully registered");
@@ -81,12 +82,31 @@ public class BotMain extends TelegramLongPollingBot {
                 sendMessage.setText("You can use this Bot");
                 ReplyKeyboardMarkup replyKeyboardMarkup = keyboardMarkapService.buttonMaking(Status.ALL_ONE);
                 sendMessage.setReplyMarkup(replyKeyboardMarkup);
-                execute(sendMessage);  // Corrected this line to execute the SendMessage object
+                execute(sendMessage);
 
                 currentUser.setName(update.getMessage().getFrom().getFirstName());
                 currentUser.setContact(update.getMessage().getContact());
                 sendFileHistorService.addUser(currentUser);
             }
+
+//            Long id = update.getMessage().getChatId();
+//            User currentUser = getUserById(id);
+//            if (currentUser.getState().equals("Entered phone number")) {
+//                currentUser.setState("Registered");
+//                SendMessage sendMessage = new SendMessage();
+//                sendMessage.setChatId(id);
+//                sendMessage.setText("You have successfully registered");
+//                execute(sendMessage);  // Corrected this line to execute the SendMessage object
+//
+//                sendMessage.setText("You can use this Bot");
+//                ReplyKeyboardMarkup replyKeyboardMarkup = keyboardMarkapService.buttonMaking(Status.ALL_ONE);
+//                sendMessage.setReplyMarkup(replyKeyboardMarkup);
+//                execute(sendMessage);  // Corrected this line to execute the SendMessage object
+//
+//                currentUser.setName(update.getMessage().getFrom().getFirstName());
+//                currentUser.setContact(update.getMessage().getContact());
+//                sendFileHistorService.addUser(currentUser);
+//            }
         }
     }
 
@@ -177,4 +197,3 @@ public class BotMain extends TelegramLongPollingBot {
         return botMain;
     }
 }
->>>>>>> 2e4b13e661dc804cc08eeb978faefc6311f232ac

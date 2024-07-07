@@ -10,14 +10,7 @@ public class Main {
     private static final BotMain botMain=BotMain.getInstance();
     public static void main(String[] args) throws TelegramApiException {
         TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
-<<<<<<< HEAD
-        botsApi.registerBot(new BotMain());
-=======
         botsApi.registerBot(botMain);
-
-
-//        HashMap<String[],Long> hashMap=new HashMap<>();
->>>>>>> 2e4b13e661dc804cc08eeb978faefc6311f232ac
 
     }
 }

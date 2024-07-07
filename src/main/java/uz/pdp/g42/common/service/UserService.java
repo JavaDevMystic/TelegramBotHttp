@@ -1,47 +1,44 @@
 package uz.pdp.g42.common.service;
 
+import lombok.NoArgsConstructor;
 import uz.pdp.g42.common.enom.FilePath;
 import uz.pdp.g42.common.model.User;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 public class UserService implements BaseService<User> {
-    private FileService<User> fileService;
+    //    private final User user;
+    private final FileService<User> fileService;
 
-<<<<<<< HEAD
-//       public UserService(FileService fileService) {
-//        this.fileService = fileService;
-//    }
-
-    public void add(User user) throws IOException {
-        fileService.writeFile(user,FilePath.USER,User.class);
-=======
-    public UserService() {
->>>>>>> 2e4b13e661dc804cc08eeb978faefc6311f232ac
-    }
-
-    public UserService(FileService<User> fileService) {
+    public UserService(FileService fileService) {
         this.fileService = fileService;
     }
 
-    @Override
     public void add(User user) throws IOException {
-        fileService.writeFile(user, FilePath.USER, User[].class);
+        fileService.writeFile(user,FilePath.USER);
     }
 
-    @Override
     public List<User> list() throws IOException {
-        return fileService.getList(FilePath.USER.getPath(), User[].class);
+        return fileService.getList(FilePath.USER.getPath());
     }
 
     public User get(Long id) throws IOException {
-        List<User> list = fileService.getList(FilePath.USER.getPath(), User[].class);
-        return list.stream().filter(user -> user.getId().equals(id)).findFirst().orElse(null);
+        List<User> list = fileService.getList(FilePath.USER.getPath());
+        for (User user : list) {
+            if (user.equals(id)) {
+                return Optional.of(user).get();
+            }
+        }
+        return Optional.<User>empty().get();
     }
 
     public List<User> getById(Long id) throws IOException {
-        List<User> list = fileService.getList(FilePath.USER.getPath(), User[].class);
+        List<User> list = fileService.getList(FilePath.USER.getPath());
         return list.stream().filter(user -> user.getId().equals(id)).toList();
     }
+
+
 }

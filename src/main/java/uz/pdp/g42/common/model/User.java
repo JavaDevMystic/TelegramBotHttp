@@ -13,4 +13,5 @@ public class User {
     private String Name;
     private String phoneNumber;
     private String state;
+    private String name;
 }

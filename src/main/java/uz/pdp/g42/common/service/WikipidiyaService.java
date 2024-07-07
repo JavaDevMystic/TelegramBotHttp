@@ -19,7 +19,7 @@ public class WikipidiyaService implements BaseService<WikipidiyaHistory>{
     }
 
     @Override
-    public WikipidiyaHistory get(UUID id) throws IOException {
+    public WikipidiyaHistory get(Long id) throws IOException {
         List<WikipidiyaHistory> list = fileService.getList(FilePath.WIKIPIDIYA.getPath(), WikipidiyaHistory.class);
         WikipidiyaHistory wikipidiya1 = list.stream().filter(wikipidiya -> wikipidiya.getChatId().equals(id)).findFirst().orElse(null);
 
@@ -27,7 +27,7 @@ public class WikipidiyaService implements BaseService<WikipidiyaHistory>{
     }
 
     @Override
-    public List<WikipidiyaHistory> getById(UUID id) throws IOException {
+    public List<WikipidiyaHistory> getById(Long id) throws IOException {
         List<WikipidiyaHistory> list = fileService.getList(FilePath.WIKIPIDIYA.getPath(), WikipidiyaHistory.class);
 
         return list.stream().filter(wikipidiya -> wikipidiya.getChatId().equals(id)).toList();

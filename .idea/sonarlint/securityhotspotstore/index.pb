@@ -35,3 +35,9 @@ X
 (src/main/java/uz/pdp/g42/json/vidio.json,b\9\b9dd583684e1b4a509d44a6e11744b125f727601
 Z
 *src/main/java/uz/pdp/g42/json/picture.json,7\8\7828f32cdf669902e464ddcc59e343160087508a
+n
+>src/main/java/uz/pdp/g42/common/service/WikipidiyaService.java,0\9\096d720869c13f1d14e495e01d6d95616cff0c38
+o
+?src/main/java/uz/pdp/g42/bot/service/SendFileHistorService.java,c\4\c4fee843a714f55d25bf49261f031da5ee7d8a8e
+l
+<src/main/java/uz/pdp/g42/common/model/WikipidiyaHistory.java,9\d\9d29e1f0e50e3bcacd29b92d99d9ca92b39e5049

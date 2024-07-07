@@ -149,7 +149,7 @@ public class BotMain extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
-        if (update.hasMessage() && update.getMessage().hasText()) {
+        if (update.hasMessage() ) {
             Message message = update.getMessage();
             Long chatId = update.getMessage().getChatId();
             System.out.println(chatId);
@@ -174,7 +174,7 @@ public class BotMain extends TelegramLongPollingBot {
                 1️⃣. To search for information
                 2️⃣. To search for video
                 3️⃣. pull question
-                Will help.
+                Will help
                 """;
 
         List<String> list = List.of("video", "search Wikipedia", "history");

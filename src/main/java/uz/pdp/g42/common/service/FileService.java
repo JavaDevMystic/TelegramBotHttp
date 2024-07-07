@@ -1,49 +1,46 @@
 package uz.pdp.g42.common.service;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import uz.pdp.g42.common.enom.FilePath;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class FileService<T> {
 
-    private static Gson gson = new Gson();
-    public  void writeFile(T t,FilePath filePath,Class<T[]> clazz ) throws IOException {
-        List<T> list = getList(filePath.getPath(),clazz);
+    private static final Gson gson = new Gson();
+
+    public void writeFile(T t, FilePath filePath, Class<T[]> clazz) throws IOException {
+        List<T> list = getList(filePath.getPath(), clazz);
         list.add(t);
-        try (
-                FileWriter fileWriter = new FileWriter(filePath.getPath())
-        ) {
+        try (FileWriter fileWriter = new FileWriter(filePath.getPath())) {
             fileWriter.write(gson.toJson(list));
         }
-
-
     }
-    public List<T> readFile(FilePath filePath,Class<T[]> clazz) throws IOException {
-        return getList(filePath.getPath(),clazz);
+
+    public List<T> readFile(FilePath filePath, Class<T[]> clazz) throws IOException {
+        return getList(filePath.getPath(), clazz);
     }
+
     public List<T> getList(String filePath, Class<T[]> clazz) throws IOException {
+        File file = new File(filePath);
+        if (!file.exists()) {
+            return new ArrayList<>();
+        }
 
-        try (
-                FileInputStream fis = new FileInputStream(filePath)
-        ) {
+        try (FileInputStream fis = new FileInputStream(filePath)) {
             byte[] bytes = fis.readAllBytes();
             String json = new String(bytes);
-            T[] ts = gson.fromJson(json,clazz);
-            List<T> list = new ArrayList<T>();
-            for (int i=0; i<ts.length ;i++){
-                list.add(ts[i]);
+            if (json.isEmpty()) {
+                return new ArrayList<>();
+            }
+            T[] ts = gson.fromJson(json, clazz);
+            List<T> list = new ArrayList<>();
+            for (T t : ts) {
+                list.add(t);
             }
             return list;
         }
-
     }
-
-
 }

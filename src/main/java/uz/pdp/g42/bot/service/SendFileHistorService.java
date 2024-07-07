@@ -12,14 +12,10 @@ public class SendFileHistorService {
     public  void addUser(User user) throws IOException {
         List<User> list = userService.list();
         boolean b = list.stream().anyMatch(user1 -> user1.getId().equals(user.getId()));
-        if (!b){
+        if (b){
             return;
         }
-        User newUser = new User();
-        newUser.setId(user.getId());
-        newUser.setName(user.getName());
-        newUser.setPhoneNumber(user.getPhoneNumber());
-        userService.add(newUser);
+        userService.add(user);
     }
 
     public void sendFileWikipidiya(String req){

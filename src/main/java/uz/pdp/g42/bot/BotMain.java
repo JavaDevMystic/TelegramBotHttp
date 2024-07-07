@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-package uz.pdp.g42.bot;
-
-<<<<<<< HEAD
-=======
->>>>>>> b209c023fb99149c1e2a21d2a6d465495a1d4204
 package uz.pdp.g42.bot;
 
 import com.google.gson.Gson;
@@ -15,8 +9,11 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
+import uz.pdp.g42.bot.TgInleniMessage;
+import uz.pdp.g42.bot.TgReplyMessage;
 import uz.pdp.g42.bot.database.Database;
 import uz.pdp.g42.bot.service.KeyboardMarkapService;
+import uz.pdp.g42.bot.service.SendFileHistorService;
 import uz.pdp.g42.bot.service.Status;
 import uz.pdp.g42.common.model.User;
 import uz.pdp.g42.common.service.UserService;
@@ -34,65 +31,60 @@ public class BotMain extends TelegramLongPollingBot {
     private static final String USERNAME = "pdphandler_bot";
     private static final String BASE_URL = "https://api.telegram.org/bot" + BOT_TOKEN + "/sendMessage";
     private static final String CHAT_ID = "5682972913";
-    private static final UserService userService=new UserService();
-    private static final Database database=Database.getInstance();
+    private static final UserService userService = new UserService();
+    private static final Database database = Database.getInstance();
     private static final KeyboardMarkapService keyboardMarkapService = new KeyboardMarkapService();
+    private static final SendFileHistorService sendFileHistorService = new SendFileHistorService();
 
     @SneakyThrows
     @Override
     public void onUpdateReceived(Update update) {
         if (update.hasMessage() && update.getMessage().hasText()) {
-            Long id=update.getMessage().getChatId();
-<<<<<<< HEAD
-            User currentUser= getUserById(id);
+            Long id = update.getMessage().getChatId();
+            User currentUser = getUserById(id);
             currentUser.setState("null");
-            String fromBotMessage=update.getMessage().getText();
 
-            if (fromBotMessage.equals("/start")) {
+            if (update.getMessage().getText().equals("/start")) {
                 currentUser.setState("Entered phone number");
                 String text = "Welcome to Bot";
                 SendPhoto sendPhoto = new SendPhoto();
                 sendPhoto.setChatId(id);
                 sendPhoto.setPhoto(new InputFile("https://miro.medium.com/v2/resize:fit:1400/1*lmbFqu5aGrPLdiRIHbe6gQ.jpeg"));
                 sendPhoto.setCaption(text);
+                execute(sendPhoto);  // Corrected this line to execute the SendPhoto object
+
+                SendMessage sendMessage = new SendMessage();
+                sendMessage.setChatId(id);
+                sendMessage.setText("Please send your phone number");
+                ReplyKeyboardMarkup replyKeyboardMarkup = keyboardMarkapService.buttonMaking(Status.TELEPHONE);
+                sendMessage.setReplyMarkup(replyKeyboardMarkup);
+                execute(sendMessage);  // Corrected this line to execute the SendMessage object
+            } else if (!update.getMessage().hasContact() && currentUser.getState().equals("Entered phone number")) {
                 SendMessage sendMessage=new SendMessage();
                 sendMessage.setChatId(id);
-                ReplyKeyboardMarkup replyKeyboardMarkup=keyboardMarkapService.replyKeyboardMarkup(Status.TELEPHONE);
-                sendMessage.setReplyMarkup(replyKeyboardMarkup);
+                sendMessage.setReplyToMessageId(update.getMessage().getMessageId());
+                sendMessage.setText("Please send your phone number using the button");
                 execute(sendMessage);
             }
         } else if (update.hasMessage() && update.getMessage().hasContact()) {
-            Long id=update.getMessage().getChatId();
-            User currentUser=getUserById(id);
+            Long id = update.getMessage().getChatId();
+            User currentUser = getUserById(id);
             if (currentUser.getState().equals("Entered phone number")) {
                 currentUser.setState("Registered");
-                SendMessage sendMessage=new SendMessage();
+                SendMessage sendMessage = new SendMessage();
                 sendMessage.setChatId(id);
                 sendMessage.setText("You have successfully registered");
-                execute(sendMessage);
-                sendMessage.setChatId(id);
+                execute(sendMessage);  // Corrected this line to execute the SendMessage object
+
                 sendMessage.setText("You can use this Bot");
-                ReplyKeyboardMarkup replyKeyboardMarkup=keyboardMarkapService.replyKeyboardMarkup(Status.ALL_ONE);
+                ReplyKeyboardMarkup replyKeyboardMarkup = keyboardMarkapService.buttonMaking(Status.ALL_ONE);
                 sendMessage.setReplyMarkup(replyKeyboardMarkup);
-                execute(sendMessage);
+                execute(sendMessage);  // Corrected this line to execute the SendMessage object
+
+                currentUser.setName(update.getMessage().getFrom().getFirstName());
+                currentUser.setContact(update.getMessage().getContact());
+                sendFileHistorService.addUser(currentUser);
             }
-=======
-//            User currentUser=getUserById(id);
-        }
-
-
-
-
-        Long chatId = update.getMessage().getChatId();
-        String messageText = update.getMessage().getText();
-
-        if (messageText.equals("/start")) {
-            sendWelcomeMessage(chatId);
-        } else if (messageText.equals("inline")) {
-            sendInlineKeyboard(chatId);
-        } else {
-            sendDefaultMessage(chatId);
->>>>>>> b209c023fb99149c1e2a21d2a6d465495a1d4204
         }
     }
 
@@ -102,11 +94,10 @@ public class BotMain extends TelegramLongPollingBot {
                 return user;
             }
         }
-        User currentUser=new User();
+        User currentUser = new User();
         currentUser.setId(id);
         database.users.add(currentUser);
         return currentUser;
-
     }
 
     private void sendInlineKeyboard(Long chatId) {
@@ -174,10 +165,13 @@ public class BotMain extends TelegramLongPollingBot {
 
         System.out.println("Response: " + response.body());
     }
-<<<<<<< HEAD
-}
-=======
 
-    // TgReplyMessage and TgInlineMessage classes should be implemented accordingly
+    private static BotMain botMain;
+
+    public static BotMain getInstance() {
+        if (botMain == null) {
+            botMain = new BotMain();
+        }
+        return botMain;
+    }
 }
->>>>>>> b209c023fb99149c1e2a21d2a6d465495a1d4204

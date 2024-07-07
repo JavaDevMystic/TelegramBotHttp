@@ -12,7 +12,7 @@ import java.util.List;
 public class KeyboardMarkapService {
 
 
-    public  ReplyKeyboardMarkup replyKeyboardMarkup(String[][] buttons) {
+    public  ReplyKeyboardMarkup buttonMaking(String[][] buttons) {
         ReplyKeyboardMarkup replyKeyboardMarkup=new ReplyKeyboardMarkup();
         replyKeyboardMarkup.setResizeKeyboard(true);
         replyKeyboardMarkup.setOneTimeKeyboard(true);
@@ -22,7 +22,7 @@ public class KeyboardMarkapService {
             KeyboardRow keyboardRow=new KeyboardRow();
             for (String s : button) {
                 KeyboardButton keyboardButton=new KeyboardButton(s);
-                if (s.equals(Status.TELEPHONE)) {
+                if (s.equals("\uD83D\uDCF2Send my phone number")) {
                     keyboardButton.setRequestContact(true);
                 }
                 keyboardRow.add(keyboardButton);

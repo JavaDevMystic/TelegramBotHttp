@@ -3,6 +3,7 @@ package uz.pdp.g42.bot.service;
 import org.glassfish.grizzly.http.util.UEncoder;
 import uz.pdp.g42.common.model.User;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -33,6 +34,9 @@ public class HttpService {
             HttpResponse<String> response = httpClient.send(request,HttpResponse.BodyHandlers.ofString());
 
         } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+        } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
         return null;

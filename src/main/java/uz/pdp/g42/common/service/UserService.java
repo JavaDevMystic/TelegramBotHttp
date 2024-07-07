@@ -5,36 +5,34 @@ import uz.pdp.g42.common.model.User;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 public class UserService implements BaseService<User> {
-//    private final User user;
-      private  FileService fileService;
+    private FileService<User> fileService;
 
-//    public UserService(FileService fileService) {
-//        this.fileService = fileService;
-//    }
-
-    public void add(User user) throws IOException {
-        fileService.writeFile(user,FilePath.USER,User.class);
+    public UserService() {
     }
+
+    public UserService(FileService<User> fileService) {
+        this.fileService = fileService;
+    }
+
+    @Override
+    public void add(User user) throws IOException {
+        fileService.writeFile(user, FilePath.USER, User[].class);
+    }
+
     @Override
     public List<User> list() throws IOException {
-        return fileService.getList(FilePath.USER.getPath(),User.class);
+        return fileService.getList(FilePath.USER.getPath(), User[].class);
     }
 
     public User get(Long id) throws IOException {
-        List<User> list = fileService.getList(FilePath.USER.getPath(), User.class);
-
-        User user1 = list.stream().filter(user -> user.getId().equals(id)).findFirst().orElse(null);
-        return user1;
+        List<User> list = fileService.getList(FilePath.USER.getPath(), User[].class);
+        return list.stream().filter(user -> user.getId().equals(id)).findFirst().orElse(null);
     }
 
     public List<User> getById(Long id) throws IOException {
-        List<User> list = fileService.getList(FilePath.USER.getPath(), User.class);
+        List<User> list = fileService.getList(FilePath.USER.getPath(), User[].class);
         return list.stream().filter(user -> user.getId().equals(id)).toList();
     }
-
-
 }

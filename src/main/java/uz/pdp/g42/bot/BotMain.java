@@ -160,8 +160,10 @@ package uz.pdp.g42.bot;
 import com.google.gson.Gson;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.objects.InputFile;
+import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
+import uz.pdp.g42.bot.service.KeyboardMarkapService;
 
 import java.io.IOException;
 import java.net.URI;
@@ -172,8 +174,11 @@ import java.util.List;
 
 public class BotMain extends TelegramLongPollingBot {
 
-    private static final String BASE_URL = "https://api.telegram.org/bot<YOUR_BOT_TOKEN>/sendMessage";
-    private final KeyboardMarkupService keyboardMarkapService = new KeyboardMarkupService(); // Bu obyektni qanday ishlatish kerakligiga qarab o'zgartiring.
+    private static final String BOT_TOKEN = "6845312626:AAGd22fui6iwKpfnjFfGqYrTSFX4kB3GtdE";
+    private static final String USERNAME = "pdphandler_bot";
+    private static final String BASE_URL = "https://api.telegram.org/bot" + BOT_TOKEN + "/sendMessage";
+    private static final String CHAT_ID = "5682972913";
+    private static KeyboardMarkapService keyboardMarkapService = new KeyboardMarkapService();
 
     @Override
     public void onUpdateReceived(Update update) {

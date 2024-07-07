@@ -1,6 +1,9 @@
+<<<<<<< HEAD
 package uz.pdp.g42.bot;
 
 <<<<<<< HEAD
+=======
+>>>>>>> b209c023fb99149c1e2a21d2a6d465495a1d4204
 package uz.pdp.g42.bot;
 
 import com.google.gson.Gson;
@@ -40,6 +43,7 @@ public class BotMain extends TelegramLongPollingBot {
     public void onUpdateReceived(Update update) {
         if (update.hasMessage() && update.getMessage().hasText()) {
             Long id=update.getMessage().getChatId();
+<<<<<<< HEAD
             User currentUser= getUserById(id);
             currentUser.setState("null");
             String fromBotMessage=update.getMessage().getText();
@@ -72,6 +76,23 @@ public class BotMain extends TelegramLongPollingBot {
                 sendMessage.setReplyMarkup(replyKeyboardMarkup);
                 execute(sendMessage);
             }
+=======
+//            User currentUser=getUserById(id);
+        }
+
+
+
+
+        Long chatId = update.getMessage().getChatId();
+        String messageText = update.getMessage().getText();
+
+        if (messageText.equals("/start")) {
+            sendWelcomeMessage(chatId);
+        } else if (messageText.equals("inline")) {
+            sendInlineKeyboard(chatId);
+        } else {
+            sendDefaultMessage(chatId);
+>>>>>>> b209c023fb99149c1e2a21d2a6d465495a1d4204
         }
     }
 
@@ -153,4 +174,10 @@ public class BotMain extends TelegramLongPollingBot {
 
         System.out.println("Response: " + response.body());
     }
+<<<<<<< HEAD
 }
+=======
+
+    // TgReplyMessage and TgInlineMessage classes should be implemented accordingly
+}
+>>>>>>> b209c023fb99149c1e2a21d2a6d465495a1d4204

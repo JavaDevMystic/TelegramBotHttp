@@ -11,8 +11,6 @@ _
 /src/main/java/uz/pdp/g42/common/model/User.java,c\4\c49fb5a2991115c55858059fee6e1c670611a27e
 e
 5src/main/java/uz/pdp/g42/common/model/Wikipidiya.java,7\f\7fd38e6559398503c05ac0e7129f5a13bb50f87d
-b
-2src/main/java/uz/pdp/g42/common/model/Picture.java,3\4\342d6c4068b399f3f47e324dff7bf7968ab59793
 V
 &src/main/java/uz/pdp/g42/bot/Main.java,f\b\fb791002102e85d4ffeb5e223f30a48a1d51301b
 b
@@ -31,14 +29,8 @@ W
 'src/main/java/uz/pdp/g42/json/user.json,a\b\ab608b353ff3a0720255e383fbbd73c66ef282af
 ]
 -src/main/java/uz/pdp/g42/json/wikipidiya.json,6\d\6d581a07ee5fd662b4d1b45bb91b72b7776e9327
-X
-(src/main/java/uz/pdp/g42/json/vidio.json,b\9\b9dd583684e1b4a509d44a6e11744b125f727601
-Z
-*src/main/java/uz/pdp/g42/json/picture.json,7\8\7828f32cdf669902e464ddcc59e343160087508a
 n
 >src/main/java/uz/pdp/g42/common/service/WikipidiyaService.java,0\9\096d720869c13f1d14e495e01d6d95616cff0c38
-o
-?src/main/java/uz/pdp/g42/bot/service/SendFileHistorService.java,c\4\c4fee843a714f55d25bf49261f031da5ee7d8a8e
 l
 <src/main/java/uz/pdp/g42/common/model/WikipidiyaHistory.java,9\d\9d29e1f0e50e3bcacd29b92d99d9ca92b39e5049
 `
@@ -51,3 +43,7 @@ e
 5src/main/java/uz/pdp/g42/bot/service/HttpService.java,e\b\eb0ac693a1b5a23b1ed0da43bb0092371c434a43
 c
 3src/main/java/uz/pdp/g42/bot/database/Database.java,c\9\c9a6ab50479d58171697e0eb8e37a838a90ff88a
+i
+9src/main/java/uz/pdp/g42/bot/service/TelegramService.java,9\7\975d85070f9bd4949e3168db05700db604ea63d6
+e
+5src/main/java/uz/pdp/g42/bot/service/HTTPService.java,0\3\03e880addc8664e4f8c9e6378d80ac4f150ded57

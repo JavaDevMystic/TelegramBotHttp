@@ -2,6 +2,7 @@ package uz.pdp.g42.bot;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 
@@ -9,7 +10,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMa
 @Getter
 @Setter
 public class TgInleniMessage {
-    private String chat_id;
-    private String text;
-    private InlineKeyboardMarkup reply_markup;
+    final String chat_id;
+    final String text;
+    final InlineKeyboardMarkup inline_Keyboard;
 }

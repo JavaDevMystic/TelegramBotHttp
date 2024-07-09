@@ -18,7 +18,7 @@ public class UserService implements BaseService<User> {
     }
 
     public void add(User user) throws IOException {
-        fileService.writeFile(user,FilePath.USER);
+        fileService.writeFile(user,FilePath.USER.getPath());
     }
 
     public List<User> list() throws IOException {

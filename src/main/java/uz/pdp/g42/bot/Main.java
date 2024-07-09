@@ -7,10 +7,8 @@ import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 import java.util.HashMap;
 
 public class Main {
-    private static final BotMain botMain=BotMain.getInstance();
     public static void main(String[] args) throws TelegramApiException {
         TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
-        botsApi.registerBot(botMain);
-
+        botsApi.registerBot(new BotMain());
     }
 }

@@ -14,5 +14,4 @@ public class User {
     private Long id;
     private String Name;
     private Contact contact;
-    private String state;
 }

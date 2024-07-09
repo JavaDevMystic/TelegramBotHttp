@@ -10,7 +10,7 @@ public class WikipidiyaService implements BaseService<Wikipidiya>{
     private FileService fileService;
 
     public void add(Wikipidiya wikipidiya) throws IOException {
-        fileService.writeFile(wikipidiya, FilePath.WIKIPIDIYA);
+        fileService.writeFile(wikipidiya, FilePath.WIKIPIDIYA.getPath());
     }
 
     public List<Wikipidiya> list() throws IOException {

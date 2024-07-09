@@ -24,6 +24,7 @@ public class KeyboardMarkapService {
                 KeyboardButton keyboardButton=new KeyboardButton(s);
                 if (s.equals("\uD83D\uDCF2Send my phone number")) {
                     keyboardButton.setRequestContact(true);
+
                 }
                 keyboardRow.add(keyboardButton);
             }
@@ -60,6 +61,24 @@ public class KeyboardMarkapService {
         return inlineKeyboardMarkup;
     }
 
+
+    public ReplyKeyboardMarkup buttonMakingContact(String status) {
+        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
+        List<KeyboardRow> keyboard = new ArrayList<>();
+
+        if (status.equals(Status.TELEPHONE)) {
+            KeyboardRow row = new KeyboardRow();
+            KeyboardButton button = new KeyboardButton("Send my phone number");
+            button.setRequestContact(true);
+            row.add(button);
+            keyboard.add(row);
+        }
+
+        replyKeyboardMarkup.setKeyboard(keyboard);
+        replyKeyboardMarkup.setResizeKeyboard(true);
+        replyKeyboardMarkup.setOneTimeKeyboard(true);
+        return replyKeyboardMarkup;
+    }
 
 
 }
